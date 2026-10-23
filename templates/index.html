@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Fortune & Lottery Analytics - Thần Số Học AI &amp; Phân Tích Đa Chu Kỳ KQXS</title>
+  <meta name="description" content="Ứng dụng giải trí kết hợp Phân tích Cảm xúc / Bói toán AI Gemini và Thống kê Dữ liệu Kết quả Xổ số Đa Chu Kỳ (30 - 60 - 100 ngày) thực tế. Giải mã giấc mơ, tìm số may mắn và soi cầu lô gan.">
+  
+  <!-- Google Fonts: Be Vietnam Pro (Chuẩn 100% Tiếng Việt, không lỗi dấu) & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600;1,700&family=JetBrains+Mono:wght@500;600;700;800&display=swap&subset=vietnamese" rel="stylesheet">
+  
+  <!-- Chart.js for Interactive Data Visualizations -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <!-- Dynamic Celestial Particles Background Canvas -->
+  <canvas id="celestialCanvas" class="celestial-canvas"></canvas>
+
+  <!-- Background Ambient Glow: Mystic Cosmic Spotlight -->
+  <div class="ambient-glow-center" id="ambientGlow"></div>
+
+  <div class="app-container">
+
+    <!-- Top Navigation Bar -->
+    <header class="site-nav">
+      <div class="brand-wrapper">
+        <div class="brand-icon-box">🔮</div>
+        <div class="brand-text">
+          <h1 id="headerMainTitle">THẦN SỐ HỌC AI &amp; KQXS <span class="dyn-timeframe-val">100</span> NGÀY</h1>
+          <p id="headerSubTitle">AI Fortuneteller &amp; <span class="dyn-timeframe-val">100</span>-Day Lottery Analytics</p>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <!-- Live Theme Switcher: 3 Bảng Màu Cực Đẹp -->
+        <div class="theme-switcher-group" id="themeSwitcher" title="Chuyển đổi bảng màu">
+          <button type="button" class="theme-pill-btn active" data-theme="royal" title="Huyền Bí Hoàng Gia (Mystic Gold & Deep Violet)">🔮 Hoàng Gia</button>
+          <button type="button" class="theme-pill-btn" data-theme="cyber" title="AI Vũ Trụ (Cyber Astral – Xanh Cyan & Tím)">🌌 Cyber</button>
+          <button type="button" class="theme-pill-btn" data-theme="emerald" title="Tài Lộc Thịnh Vượng (Ngọc Lục Bảo & Vàng Kim)">💎 Ngọc Bích</button>
+        </div>
+
+        <div class="author-badge" title="Tác giả: Bùi Huy Hoàng">
+          <span>⭐</span>
+          <span class="author-name">Bùi Huy Hoàng</span>
+        </div>
+
+        <button class="btn-icon" id="btnOpenMobile" title="Mở trên điện thoại (Quét mã QR)" aria-label="Open on Mobile">
+          <span>📱</span>
+        </button>
+
+        <div class="status-pill" id="lotteryStatusPill" title="Trạng thái dữ liệu xổ số">
+          <span class="status-dot"></span>
+          <span id="lotteryStatusText">KQXS: Đang tải...</span>
+        </div>
+
+        <button class="btn-icon" id="btnSoundToggle" title="Bật/Tắt âm thanh" aria-label="Toggle Sound">
+          <span id="soundIcon">🔊</span>
+        </button>
+
+        <button class="btn-icon" id="btnRefreshData" title="Cập nhật kết quả xổ số mới nhất" aria-label="Refresh Data">
+          <span>🔄</span>
+        </button>
+
+        <button class="btn-icon" id="btnOpenSettings" title="Cài đặt API Key Gemini" aria-label="Settings">
+          <span>⚙️</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Feng Shui Live Ticker & 18h15 XSMB Countdown Bar -->
+    <div class="fengshui-ticker-bar" id="fengshuiTickerBar">
+      <div class="ticker-item ticker-countdown">
+        <span class="ticker-icon">⏰</span>
+        <span class="ticker-label">XSMB 18h15:</span>
+        <span class="ticker-val" id="countdownTimer">Đang tính...</span>
+      </div>
+      <div class="ticker-divider"></div>
+      <div class="ticker-item">
+        <span class="ticker-icon">🌕</span>
+        <span class="ticker-label">Âm lịch:</span>
+        <span class="ticker-val" id="lunarDateText">Ngày Hoàng Đạo</span>
+      </div>
+      <div class="ticker-divider"></div>
+      <div class="ticker-item">
+        <span class="ticker-icon">🧭</span>
+        <span class="ticker-label">Tài Thần:</span>
+        <span class="ticker-val" id="fengShuiDirection">Đông Nam</span>
+      </div>
+      <div class="ticker-divider"></div>
+      <div class="ticker-item">
+        <span class="ticker-icon">🍀</span>
+        <span class="ticker-label">Bộ 3 Vượng Khí:</span>
+        <span class="ticker-val ticker-highlight" id="todayLuckyTrio">68 • 79 • 86</span>
+      </div>
+    </div>
+
+    <!-- Main Multi-Task Tab Navigation -->
+    <nav class="main-tabs-nav" aria-label="Main Tabs Navigation">
+      <button type="button" class="tab-btn active" data-tab="board">
+        <span class="tab-icon">📊</span>
+        <span class="tab-label">Bảng KQXS 27 Giải</span>
+        <span class="tab-badge">Trực Tiếp</span>
+      </button>
+      <button type="button" class="tab-btn" data-tab="fortune">
+        <span class="tab-icon">🔮</span>
+        <span class="tab-label">Xin Quẻ &amp; Soi Cầu AI</span>
+      </button>
+      <button type="button" class="tab-btn" data-tab="numerology">
+        <span class="tab-icon">🔢</span>
+        <span class="tab-label">Thần Số Học Pythagoras</span>
+        <span class="tab-badge-gold">Bói Ngày Sinh</span>
+      </button>
+      <button type="button" class="tab-btn" data-tab="pascal">
+        <span class="tab-icon">🔺</span>
+        <span class="tab-label">Cầu Pascal &amp; Tổng Đề</span>
+        <span class="tab-badge">Toán Học</span>
+      </button>
+      <button type="button" class="tab-btn" data-tab="chart">
+        <span class="tab-icon">📈</span>
+        <span class="tab-label">Biểu Đồ 100 Số</span>
+        <span class="tab-badge">Chart.js</span>
+      </button>
+      <button type="button" class="tab-btn" data-tab="predict">
+        <span class="tab-icon">🎯</span>
+        <span class="tab-label">Bạc Nhớ &amp; Lô Rơi</span>
+      </button>
+      <button type="button" class="tab-btn" data-tab="dreams">
+        <span class="tab-icon">📖</span>
+        <span class="tab-label">Sổ Mơ Toàn Tập</span>
+        <span class="tab-badge-gold">90+ Điềm</span>
+      </button>
+    </nav>
+
+    <!-- Multi-Horizon Timeframe Control Bar -->
+    <div class="timeframe-horizon-bar" id="timeframeHorizonBar">
+      <div class="timeframe-horizon-info">
+        <span class="horizon-badge">⏳ CHU KỲ PHÂN TÍCH</span>
+        <span class="horizon-sub" id="timeframeSubText">Đang xem: 100 Ngày (Chu kỳ vàng phong thủy)</span>
+      </div>
+      <div class="timeframe-pills-group" id="timeframePills">
+        <button type="button" class="btn-timeframe" data-timeframe="30">
+          <span class="tf-icon">⚡</span>
+          <span class="tf-title">30 Ngày</span>
+          <span class="tf-badge">Đà Nóng</span>
+        </button>
+        <button type="button" class="btn-timeframe" data-timeframe="60">
+          <span class="tf-icon">📊</span>
+          <span class="tf-title">60 Ngày</span>
+          <span class="tf-badge">Tiêu Chuẩn</span>
+        </button>
+        <button type="button" class="btn-timeframe active" data-timeframe="100">
+          <span class="tf-icon">👑</span>
+          <span class="tf-title">100 Ngày</span>
+          <span class="tf-badge">Chu Kỳ Vàng</span>
+        </button>
+      </div>
+      <div class="timeframe-meta-status">
+        <span class="live-dot-pulse"></span>
+        <span id="timeframeStatusLabel">Dữ liệu 100 kỳ + Kỷ lục 10-15 năm</span>
+      </div>
+    </div>
+
+    <!-- =======================================================================
+         TAB 1: BẢNG KQXS 27 GIẢI & ĐẦU ĐUÔI
+         ======================================================================= -->
+    <div id="panel-board" class="tab-content active">
+      <section class="hero-section" style="margin-bottom: 1.5rem;">
+        <div class="hero-badge">
+          <span>🔴 Trực Tiếp XSMB &bull; Dữ Liệu Thời Gian Thực <span class="dyn-timeframe-val">100</span> Ngày</span>
+        </div>
+        <h2 class="hero-title">
+          Bảng Kết Quả <span class="title-gradient-gold">27 Giải Truyền Thống</span> &amp;<br>
+          Phân Tích <span class="title-gradient-purple">Loto 2 Số Đầu - Đuôi VIP</span>
+        </h2>
+        <p class="hero-subtitle">
+          Cập nhật đầy đủ 27 giải thưởng Xổ Số Kiến Thiết Miền Bắc, tích hợp Bảng Vàng Giải Đặc Biệt hoàng gia, tách bạch số đề, thống kê đầu/đuôi câm và phân tích nhịp lô rơi trực quan.
+        </p>
+      </section>
+
+      <!-- Golden Jackpot Showcase Hero Card -->
+      <section class="card-glass jackpot-hero-container" style="margin-bottom: 1.5rem;">
+        <!-- Control Toolbar: Date Selector + Nav Buttons + Copy Button -->
+        <div class="board-header-controls">
+          <div class="draw-select-wrapper">
+            <label for="drawDateSelect" style="font-size: 0.9rem; font-weight: 700; color: var(--gold-400); display: flex; align-items: center; gap: 0.35rem;">
+              <span>📅</span> Chọn kỳ mở thưởng:
+            </label>
+            <select id="drawDateSelect" class="draw-dropdown">
+              <option value="0">Đang tải danh sách <span class="dyn-timeframe-val">100</span> ngày...</option>
+            </select>
+          </div>
+
+          <div class="board-toolbar-actions">
+            <button type="button" class="btn-live-stream" id="btnLiveStream" title="Xem trực tiếp từng giải đang quay theo thời gian thực (18h15 - 18h30)">
+              <span class="live-red-beacon"></span>
+              <span class="live-btn-text">🔴 Trực Tiếp Live</span>
+            </button>
+            <button type="button" class="btn-simulate-stream" id="btnSimulateDraw" title="Mô phỏng quay trực tiếp từng giải một (có âm thanh lồng cầu & hiệu ứng xếp thẻ 3D)">
+              <span>▶️</span> Mô Phỏng Quay Từng Số
+            </button>
+            <button type="button" class="btn-secondary" id="btnPrevDraw" title="Kỳ trước đó">⬅️ Kỳ Trước</button>
+            <button type="button" class="btn-secondary" id="btnNextDraw" title="Kỳ sau đó">Kỳ Sau ➡️</button>
+            <button type="button" class="btn-secondary active" id="btnLatestDraw" title="Về kỳ mới nhất">⚡ Mới Nhất</button>
+            <button type="button" class="btn-copy-action" id="btnCopyKqxs" title="Sao chép kết quả gửi bạn bè">
+              <span>📋</span> Sao Chép Kết Quả
+            </button>
+          </div>
+        </div>
+
+        <!-- Live Stream Realtime Ticker Banner -->
+        <div class="live-stream-banner" id="liveStreamBanner" style="display: none;">
+          <div class="live-banner-left">
+            <span class="live-pulse-ring">
+              <span class="pulse-wave"></span>
+              <span class="pulse-center"></span>
+            </span>
+            <div class="live-text-group">
+              <div class="live-title-row">
+                <strong class="live-title-text" id="liveTitleText">🔴 ĐANG QUAY TRỰC TIẾP XSMB</strong>
+                <span class="live-date-pill" id="liveDateText">Hôm nay</span>
+              </div>
+              <div class="live-sub-text" id="liveSubText">Hệ thống tự động đồng bộ từng giải & bảng Đầu - Đuôi 3D theo thời gian thực</div>
+            </div>
+          </div>
+          <div class="live-banner-right">
+            <div class="live-progress-badge">
+              <span class="progress-lbl">Tiến độ:</span>
+              <strong class="progress-num" id="liveProgressCount">0 / 27 giải</strong>
+            </div>
+            <button type="button" class="btn-live-speed" id="btnLiveSpeed" title="Thay đổi tốc độ mô phỏng" style="display: none;">
+              ⚡ 1x
+            </button>
+            <button type="button" class="btn-live-stop" id="btnLiveStop" title="Tạm dừng chế độ Live / Mô Phỏng">
+              ⏸️ Dừng
+            </button>
+          </div>
+        </div>
+
+        <!-- Majestic Golden Jackpot Banner -->
+        <div class="jackpot-showcase-box" id="jackpotShowcaseBox">
+          <div class="jackpot-crown-header">
+            <div class="jackpot-badge-left">
+              <span class="jackpot-crown-icon">👑</span>
+              <span class="jackpot-tag">GIẢI ĐẶC BIỆT MIỀN BẮC</span>
+            </div>
+            <span class="jackpot-date-pill" id="jackpotDatePill">Đang tải...</span>
+          </div>
+
+          <div class="jackpot-main-display">
+            <div class="jackpot-five-digits" id="jackpotFiveDigits">
+              <span class="digit-box">-</span>
+              <span class="digit-box">-</span>
+              <span class="digit-box">-</span>
+              <span class="digit-box digit-special">-</span>
+              <span class="digit-box digit-special">-</span>
+            </div>
+            <div class="jackpot-loto-spotlight">
+              <div class="spotlight-label">2 SỐ CUỐI (ĐỀ)</div>
+              <div class="spotlight-num" id="jackpotLotoSpotlight">--</div>
+            </div>
+          </div>
+
+          <!-- Quick Insight Meta Pills -->
+          <div class="jackpot-meta-bar" id="jackpotMetaBar">
+            <div class="jackpot-meta-pill">
+              <span class="meta-icon">➕</span>
+              <span class="meta-label">Tổng Đề:</span>
+              <strong class="meta-value text-gold" id="metaTongDe">--</strong>
+            </div>
+            <div class="jackpot-meta-pill">
+              <span class="meta-icon">⚡</span>
+              <span class="meta-label">Chạm:</span>
+              <strong class="meta-value text-rose" id="metaChamDe">--</strong>
+            </div>
+            <div class="jackpot-meta-pill">
+              <span class="meta-icon">🌓</span>
+              <span class="meta-label">Dạng:</span>
+              <strong class="meta-value text-cyan" id="metaTypeDe">--</strong>
+            </div>
+            <div class="jackpot-meta-pill">
+              <span class="meta-icon">🎯</span>
+              <span class="meta-label">Đầu - Đuôi:</span>
+              <strong class="meta-value text-emerald" id="metaDauDuoiDe">--</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Main Split Layout: 27 Prizes Table & Head-Tail Grid -->
+      <section class="card-glass" style="margin-bottom: 1.5rem;">
+        <div class="board-split-layout">
+          <!-- Cột 1: Bảng 27 Giải Truyền Thống Pro -->
+          <div class="lottery-table-col">
+            <div class="col-header-bar">
+              <h3 class="col-title" id="boardDrawTitle">
+                Kết Quả XSMB Ngày: --
+              </h3>
+              <span class="badge-db-glow" id="boardDbBadge">ĐB: --</span>
+            </div>
+
+            <table class="lottery-27-table-pro" id="lottery27Table">
+              <tbody>
+                <tr class="row-prize-db">
+                  <th class="prize-tag-col tag-db">ĐẶC BIỆT</th>
+                  <td class="prize-val-cell"><span class="prize-num-db" id="prizeDB">-----</span></td>
+                </tr>
+                <tr class="row-prize-g1">
+                  <th class="prize-tag-col tag-g1">Giải Nhất</th>
+                  <td class="prize-val-cell"><span class="prize-num-g1" id="prizeG1">-----</span></td>
+                </tr>
+                <tr class="row-prize-g2">
+                  <th class="prize-tag-col tag-g2">Giải Nhì</th>
+                  <td class="prize-val-cell"><div class="prize-flex-cells" id="prizeG2"><span>-----</span><span>-----</span></div></td>
+                </tr>
+                <tr class="row-prize-g3">
+                  <th class="prize-tag-col tag-g3">Giải Ba</th>
+                  <td class="prize-val-cell"><div class="prize-flex-cells grid-3-cols" id="prizeG3"><span>-----</span><span>-----</span><span>-----</span><span>-----</span><span>-----</span><span>-----</span></div></td>
+                </tr>
+                <tr class="row-prize-g4">
+                  <th class="prize-tag-col tag-g4">Giải Tư</th>
+                  <td class="prize-val-cell"><div class="prize-flex-cells" id="prizeG4"><span>----</span><span>----</span><span>----</span><span>----</span></div></td>
+                </tr>
+                <tr class="row-prize-g5">
+                  <th class="prize-tag-col tag-g5">Giải Năm</th>
+                  <td class="prize-val-cell"><div class="prize-flex-cells grid-3-cols" id="prizeG5"><span>----</span><span>----</span><span>----</span><span>----</span><span>----</span><span>----</span></div></td>
+                </tr>
+                <tr class="row-prize-g6">
+                  <th class="prize-tag-col tag-g6">Giải Sáu</th>
+                  <td class="prize-val-cell"><div class="prize-flex-cells" id="prizeG6"><span>---</span><span>---</span><span>---</span></div></td>
+                </tr>
+                <tr class="row-prize-g7">
+                  <th class="prize-tag-col tag-g7">Giải Bảy</th>
+                  <td class="prize-val-cell"><div class="prize-flex-cells g7-cells" id="prizeG7"><span>--</span><span>--</span><span>--</span><span>--</span></div></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- Quick Insights Box underneath 27 Prizes -->
+            <div class="daily-quick-insights-card" id="dailyQuickInsights">
+              <div class="insight-item">
+                <span class="insight-icon">🔥</span>
+                <span class="insight-label">Đầu về nhiều nhất:</span>
+                <strong class="insight-val text-gold" id="insightTopDau">--</strong>
+              </div>
+              <div class="insight-item">
+                <span class="insight-icon">🧊</span>
+                <span class="insight-label">Đầu câm:</span>
+                <strong class="insight-val text-rose" id="insightCamDau">Không có</strong>
+              </div>
+              <div class="insight-item">
+                <span class="insight-icon">❄️</span>
+                <span class="insight-label">Đuôi câm:</span>
+                <strong class="insight-val text-cyan" id="insightCamDuoi">Không có</strong>
+              </div>
+              <div class="insight-item">
+                <span class="insight-icon">🎲</span>
+                <span class="insight-label">Lô kép đã về:</span>
+                <strong class="insight-val text-emerald" id="insightLoKep">--</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cột 2: Bảng Loto Đầu - Đuôi Pro -->
+          <div class="head-tail-col">
+            <div class="col-header-bar">
+              <h3 class="col-title text-gold">
+                Bảng Loto 2 Số (Đầu - Đuôi)
+              </h3>
+              <div class="head-tail-legend">
+                <span class="legend-badge leg-db">👑 ĐB</span>
+                <span class="legend-badge leg-stack-2">2🎴 Song Nháy</span>
+                <span class="legend-badge leg-stack-3">3🎴 Tam Hoa</span>
+                <span class="legend-badge leg-stack-4">4+🎴 Tứ Quý+</span>
+                <span class="legend-badge leg-cam">■ CÂM</span>
+              </div>
+            </div>
+
+            <!-- Switcher Đầu / Đuôi -->
+            <div class="dau-duoi-toggle-bar">
+              <button type="button" class="btn-toggle-dd active" id="btnShowDau">
+                Xem Theo ĐẦU (0 - 9)
+              </button>
+              <button type="button" class="btn-toggle-dd" id="btnShowDuoi">
+                Xem Theo ĐUÔI (0 - 9)
+              </button>
+            </div>
+
+            <div id="dauViewContainer">
+              <table class="dau-duoi-table-pro">
+                <thead>
+                  <tr>
+                    <th style="width: 65px;">Đầu</th>
+                    <th style="text-align: left; padding-left: 1rem;">Các Số Đuôi Về (Nháy)</th>
+                  </tr>
+                </thead>
+                <tbody id="dauTableBody">
+                  <!-- Populated via JS -->
+                </tbody>
+              </table>
+            </div>
+
+            <div id="duoiViewContainer" style="display: none;">
+              <table class="dau-duoi-table-pro">
+                <thead>
+                  <tr>
+                    <th style="width: 65px; color: var(--purple-400);">Đuôi</th>
+                    <th style="text-align: left; padding-left: 1rem;">Các Số Đầu Về (Nháy)</th>
+                  </tr>
+                </thead>
+                <tbody id="duoiTableBody">
+                  <!-- Populated via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 100-Day Aggregate Head-Tail Stats -->
+      <section class="card-glass">
+        <div class="card-header-bar">
+          <div class="card-title-group">
+            <span class="card-title-icon">📈</span>
+            <h3 class="card-title">Thống Kê Tần Suất Đầu - Đuôi Toàn Bộ <span class="dyn-timeframe-val">100</span> Ngày</h3>
+          </div>
+          <span style="font-size: 0.8rem; color: var(--text-dim);">Tổng hợp từ các kỳ quay</span>
+        </div>
+
+        <div class="aggregate-dau-duoi-grid">
+          <div>
+            <h4 style="font-size: 0.95rem; color: var(--gold-400); margin-bottom: 0.85rem;">
+              👑 Tần Suất Xuất Hiện Theo Đầu (0 - 9)
+            </h4>
+            <div id="dauAggregateBars">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+          <div>
+            <h4 style="font-size: 0.95rem; color: var(--purple-400); margin-bottom: 0.85rem;">
+              🎯 Tần Suất Xuất Hiện Theo Đuôi (0 - 9)
+            </h4>
+            <div id="duoiAggregateBars">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- =======================================================================
+         TAB 2: XIN QUẺ & SOI CẦU AI
+         ======================================================================= -->
+    <div id="panel-fortune" class="tab-content">
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-badge">
+        <span>✨ Bản Quyền &amp; Phát Triển Bởi Bùi Huy Hoàng &bull; Powered by Gemini AI</span>
+      </div>
+      <h2 class="hero-title">
+
+        Gửi Giấc Mơ Cho <span class="title-gradient-gold">Thầy Bói AI</span>,<br>
+        Xem <span class="title-gradient-purple">Số May Mắn &amp; Thống Kê <span class="dyn-timeframe-val">100</span> Ngày</span>
+      </h2>
+      <p class="hero-subtitle">
+        Nhập một giấc mơ, tâm sự hoặc một cảm giác thoáng qua trong ngày. AI sẽ bóc tách cảm xúc, giải mã điềm báo, phán con số tài lộc và kiểm tra ngay tần suất nổ lô thực tế <span class="dyn-timeframe-val">100</span> ngày qua!
+      </p>
+    </section>
+
+    <!-- Oracle Input Shrine -->
+    <main class="input-shrine-card">
+      <div class="input-header">
+        <label for="fortuneInput" class="input-label">
+          <span>📜</span> Đoạn chat, giấc mơ hoặc tâm sự của bạn hôm nay:
+        </label>
+        <span class="char-counter" id="charCounter">0 ký tự</span>
+      </div>
+
+      <textarea 
+        id="fortuneInput" 
+        class="fortune-textarea" 
+        rows="4" 
+        placeholder="Ví dụ: Đêm qua mơ thấy bắt được con rùa vàng bơi qua ao làng, sáng nay đi làm tự dưng nhặt được tờ 50k rơi ngoài ngõ..."
+      ></textarea>
+
+      <!-- Vision Image Upload Bar -->
+      <div class="vision-upload-bar">
+        <input type="file" id="visionImageInput" accept="image/*" style="display:none;">
+        <button type="button" class="btn-vision-trigger" id="btnTriggerImageUpload">
+          <span>📷</span> <span id="visionUploadLabel">Thêm ảnh điềm báo (Điềm lạ, xe cộ, đồ vật, giấc mơ...)</span>
+        </button>
+        <div class="vision-preview-box" id="visionPreviewBox" style="display:none;">
+          <img id="visionPreviewImg" src="" alt="Điềm báo xem ảnh">
+          <div class="vision-preview-info">
+            <span class="vision-img-name" id="visionImgName">anh_diem_bao.jpg</span>
+            <button type="button" class="btn-remove-vision-img" id="btnRemoveVisionImg" title="Xóa ảnh">&times;</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Prompt Suggestion Pills -->
+      <div class="quick-pills-wrapper">
+        <span class="quick-pills-label">Gợi ý quẻ nhanh:</span>
+        <button type="button" class="pill-item" data-text="Đêm qua mình nằm mơ thấy bắt được con rùa vàng bơi trên sông nước trong vắt">🐢 Mơ thấy rùa vàng</button>
+        <button type="button" class="pill-item" data-text="Tự dưng mơ thấy một con rắn hổ mang khổng lồ đuổi theo nhưng không cắn">🐍 Mơ thấy rắn đuổi</button>
+        <button type="button" class="pill-item" data-text="Sáng nay vừa bước chân ra cửa thì làm rơi vỡ cốc cà phê lên áo trắng">☕ Đổ cà phê lên áo</button>
+        <button type="button" class="pill-item" data-text="Hôm nay trong người tự nhiên thấy nóng ruột, trực giác mách bảo sắp có khoản tiền bất ngờ">💸 Linh cảm tài lộc</button>
+        <button type="button" class="pill-item" data-text="Vừa cãi nhau với người yêu vì chiếc bánh bao nhân trứng muối xong giận dỗi">💔 Cãi nhau người yêu</button>
+        <button type="button" class="pill-item" data-text="Đi trên đường bắt gặp 3 chiếc xe máy liên tiếp có biển số đuôi 68">🚘 Biển số xe đẹp</button>
+      </div>
+
+      <!-- Controls & Model Selection -->
+      <div class="input-controls">
+        <div class="ai-engine-select-box">
+          <label for="modelSelect" style="font-size: 0.85rem; color: var(--text-dim);">Bộ não AI:</label>
+          <select id="modelSelect" class="model-dropdown">
+            <option value="gemini-3.8-flash">Gemini 3.8 Flash (Mạnh nhất)</option>
+            <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
+            <option value="gemini-1.5-flash">Gemini 1.5 Flash</option>
+            <option value="heuristic">Thầy Bói Dân Gian (Offline Oracle)</option>
+          </select>
+        </div>
+
+        <button type="button" class="btn-primary-cta" id="btnSubmitFortune">
+          <span>✨</span> Xin Quẻ & Soi Cầu Ngay
+        </button>
+      </div>
+    </main>
+
+    <!-- Animated Loading Stage -->
+    <section class="fortune-loading-stage" id="loadingStage">
+      <!-- 3D Shaking Drum & Spinning Number -->
+      <div class="shaking-cylinder" id="shakingCylinder">
+        <div class="shaking-stick"></div>
+      </div>
+      <div class="roller-box" id="rollerBox" style="display:none;">
+        <span class="roller-number" id="rollerDisplay">00</span>
+      </div>
+
+      <div class="loading-step-text" id="loadingStepText">Đang khởi tạo kết nối tâm linh...</div>
+      <div class="loading-subtext" id="loadingSubText">Thầy Bói AI đang nhắm mắt bấm độn...</div>
+    </section>
+
+    <!-- Results Dashboard -->
+    <section class="results-dashboard" id="resultsDashboard">
+      <div class="dashboard-grid">
+
+        <!-- CARD 1: AI FORTUNE DETAILS -->
+        <article class="card-glass" id="fortuneCard">
+          <div class="card-header-bar">
+            <div class="card-title-group">
+              <span class="card-title-icon">🎴</span>
+              <h3 class="card-title">Quẻ Bói Thần Số AI</h3>
+            </div>
+            <span class="status-pill" id="aiModelBadge" style="color: var(--purple-400); border-color: rgba(168, 85, 247, 0.3); background: rgba(168, 85, 247, 0.1);">
+              Gemini 3.8 Flash
+            </span>
+          </div>
+
+          <!-- Lucky Number Showcase -->
+          <div class="lucky-hero-showcase">
+            <div class="lucky-ball-3d">
+              <span class="lucky-ball-num" id="resLuckyNumber">--</span>
+            </div>
+            <div class="lucky-ball-info">
+              <div class="lucky-ball-label">Con Số May Mắn Hôm Nay</div>
+              <div class="lucky-companion-pair">
+                <span>Cặp số tương sinh:</span>
+                <span class="pair-badge" id="resLuckyPair">-- / --</span>
+              </div>
+              <div class="element-pill" id="resElement">
+                <span>⚡</span> Mệnh Kim (Vàng ròng phát tài)
+              </div>
+            </div>
+          </div>
+
+          <!-- Prophecy Quote Callout -->
+          <div class="prophecy-quote-box">
+            <p id="resProphecy">"Đang tải quẻ bói..."</p>
+          </div>
+
+          <!-- Witty Rationale -->
+          <div class="reason-box">
+            <strong>💡 Giải mã thiên cơ: </strong>
+            <span id="resReason">...</span>
+          </div>
+
+          <!-- Daily Action Advice -->
+          <div class="action-advice-box">
+            <span>🧭</span>
+            <div>
+              <strong>Lời khuyên trong ngày: </strong>
+              <span id="resAdvice">...</span>
+            </div>
+          </div>
+
+          <!-- Mood Breakdown Bars -->
+          <div class="mood-bars-section">
+            <h4>Chỉ Số Cảm Xúc Hôm Nay</h4>
+            <div id="moodBarsContainer">
+              <!-- Dynamically rendered -->
+            </div>
+          </div>
+        </article>
+
+        <!-- CARD 2: 30-DAY LOTTERY STATS -->
+        <article class="card-glass" id="lotteryCard">
+          <div class="card-header-bar">
+            <div class="card-title-group">
+              <span class="card-title-icon">📊</span>
+              <h3 class="card-title">Thống Kê KQXS <span class="dyn-timeframe-val">100</span> Ngày</h3>
+            </div>
+            <span style="font-size: 0.8rem; color: var(--text-dim);" id="lotteryUpdatedDate">
+              Dữ liệu <span class="dyn-timeframe-val">100</span> ngày qua
+            </span>
+          </div>
+
+          <!-- Status Banner (Hot / Normal / Gan) -->
+          <div class="lottery-status-banner">
+            <div class="status-badge-lg status-badge-hot" id="resStatusBadge">
+              🔥 Siêu HOT
+            </div>
+            <div class="status-desc-text" id="resStatusDesc">
+              Số 68 đã xuất hiện 12 lần trong chu kỳ phân tích gần nhất.
+            </div>
+          </div>
+
+          <!-- 4-Stat Grid -->
+          <div class="stat-tiles-grid">
+            <div class="stat-tile">
+              <div class="stat-tile-label">Tần Suất <span class="dyn-timeframe-val">100</span> Ngày</div>
+              <div class="stat-tile-val" id="statHits">-- lần</div>
+              <div class="stat-tile-sub" id="statHitDays">Nổ ở -- / <span class="dyn-timeframe-val">100</span> ngày</div>
+            </div>
+
+            <div class="stat-tile">
+              <div class="stat-tile-label">Số Ngày Chưa Về</div>
+              <div class="stat-tile-val" id="statUnseen">-- ngày</div>
+              <div class="stat-tile-sub" id="statLastSeen">Lần cuối: --</div>
+            </div>
+
+            <div class="stat-tile">
+              <div class="stat-tile-label">Trúng Giải Đặc Biệt</div>
+              <div class="stat-tile-val" id="statSpecialHits">-- lần</div>
+              <div class="stat-tile-sub" id="statSpecialSub">Trúng Đề <span class="dyn-timeframe-val">100</span> ngày qua</div>
+            </div>
+
+            <div class="stat-tile">
+              <div class="stat-tile-label">Xếp Hạng Tần Suất</div>
+              <div class="stat-tile-val" id="statRank">#-- / 100</div>
+              <div class="stat-tile-sub" id="statAvg">TB toàn bảng: 8.1 lần</div>
+            </div>
+          </div>
+
+          <!-- 30-Day Heatmap / Timeline -->
+          <div class="timeline-section">
+            <div class="timeline-header">
+              <span id="timelineTitleText">LỊCH SỬ NỔ LÔ GẦN NHẤT</span>
+              <span>(Hôm qua &rarr; quá khứ)</span>
+            </div>
+            <div class="dots-heatmap-row" id="dotsHeatmap">
+              <!-- Dynamically populated 30/60/100 dots -->
+            </div>
+          </div>
+
+          <!-- Dual-Engine Real-Time Math & Historical Gan Audit -->
+          <div class="oracle-audit-box" id="oracleAuditBox">
+            <div class="oracle-audit-header">
+              <div class="audit-header-left">
+                <span class="audit-badge-icon">🛡️</span>
+                <div>
+                  <h4 class="audit-title">KIỂM ĐỊNH TOÁN HỌC &amp; KỶ LỤC LỊCH SỬ</h4>
+                  <span class="audit-subtitle">Đối chiếu tức thì với 100 kỳ quay &amp; kỷ lục Max Gan 10-15 năm</span>
+                </div>
+              </div>
+              <div class="audit-score-pill" id="auditScorePill">
+                <span class="score-label">Độ An Toàn Vốn:</span>
+                <span class="score-num" id="auditConfidenceScore">--%</span>
+              </div>
+            </div>
+            <div class="audit-metrics-grid">
+              <div class="audit-metric-item">
+                <span class="metric-label">Chu Kỳ Vắng Mặt</span>
+                <span class="metric-val" id="auditDaysUnseen">-- ngày</span>
+                <span class="metric-sub" id="auditLastSeen">Lần cuối: --</span>
+              </div>
+              <div class="audit-metric-item">
+                <span class="metric-label">Kỷ Lục Max Gan 10-15 Năm</span>
+                <span class="metric-val gold-text" id="auditMaxGan">-- ngày</span>
+                <span class="metric-sub" id="auditRecordYear">Kỷ lục năm: --</span>
+              </div>
+              <div class="audit-metric-item">
+                <span class="metric-label">Khoảng Cách Đỉnh Gan</span>
+                <span class="metric-val cyan-text" id="auditGanGap">-- ngày</span>
+                <span class="metric-sub" id="auditGanGapDesc">Còn cách đỉnh kỷ lục</span>
+              </div>
+              <div class="audit-metric-item">
+                <span class="metric-label">Đánh Giá An Toàn Vốn</span>
+                <span class="metric-val" id="auditSafetyStatus">--</span>
+                <span class="metric-sub" id="auditSafetyDesc">Theo thống kê xác suất</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Companion Pair Quick Stat -->
+          <div id="pairCompanionBox" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 0.85rem 1rem; font-size: 0.85rem; color: var(--text-muted); display: none;">
+            <strong>🔗 Số bóng tương ứng (<span id="pairNum">--</span>): </strong>
+            <span id="pairHits">-- lần</span> | Trạng thái: <span id="pairStatus">--</span>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- CARD 3: MARKET OVERVIEW & QUICK CHECKER -->
+      <article class="card-glass overview-section-card">
+        <div class="card-header-bar">
+          <div class="card-title-group">
+            <span class="card-title-icon">📈</span>
+            <h3 class="card-title">Bảng Vàng XSMB: Top Hot, Lô Gan & Tra Cứu Nhanh</h3>
+          </div>
+          <span style="font-size: 0.8rem; color: var(--text-dim);">Tổng hợp 810 giải xổ số</span>
+        </div>
+
+        <div class="overview-grid">
+          <!-- Column 1: Top 5 Hot -->
+          <div>
+            <h4 style="font-size: 0.9rem; color: var(--rose-400); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.4rem;">
+              🔥 Top 5 Con Số Về Nhiều Nhất
+            </h4>
+            <ul class="rank-list" id="topHotList">
+              <li class="rank-item">Đang tải...</li>
+            </ul>
+          </div>
+
+          <!-- Column 2: Top 5 Gan -->
+          <div>
+            <h4 style="font-size: 0.9rem; color: var(--cyan-400); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.4rem;">
+              🧊 Top 5 Lô Gan Lâu Chưa Về
+            </h4>
+            <ul class="rank-list" id="topGanList">
+              <li class="rank-item">Đang tải...</li>
+            </ul>
+          </div>
+
+          <!-- Column 3: Quick Number Checker -->
+          <div>
+            <h4 style="font-size: 0.9rem; color: var(--gold-400); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.4rem;">
+              🔍 Tra Cứu Số Bất Kỳ (00-99)
+            </h4>
+            <p style="font-size: 0.8rem; color: var(--text-dim); margin-bottom: 0.5rem;">
+              Nhập nhanh 1 con số bạn yêu thích để soi tần suất <span class="dyn-timeframe-val">100</span> ngày:
+            </p>
+            <form class="quick-checker-form" id="quickCheckerForm">
+              <input type="text" maxlength="2" class="quick-checker-input" id="quickCheckInput" placeholder="VD: 68">
+              <button type="submit" class="btn-secondary">Tra Cứu</button>
+            </form>
+            <div id="quickCheckResult" style="margin-top: 0.75rem; font-size: 0.85rem; display: none;"></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Action Bar (Re-shake, Share, Download Card) -->
+      <div class="action-bar">
+        <button type="button" class="btn-action btn-action-primary" id="btnReroll">
+          <span>🔄</span> Lắc Quẻ Mới
+        </button>
+        <button type="button" class="btn-action btn-action-canvas" id="btnCopyCard">
+          <span>📋</span> Sao Chép Ảnh Thẻ Bài
+        </button>
+        <button type="button" class="btn-action btn-action-canvas" id="btnDownloadCard">
+          <span>📸</span> Tải Ảnh Thẻ Bài (PNG)
+        </button>
+        <button type="button" class="btn-action btn-action-secondary" id="btnShareText">
+          <span>📝</span> Sao Chép Quẻ Bói
+        </button>
+        <button type="button" class="btn-action btn-action-secondary" id="btnScrollToTop">
+          <span>⬆️</span> Về Đầu Trang
+        </button>
+      </div>
+    </section>
+    </div>
+    <!-- /TAB 1: PANEL-FORTUNE -->
+
+
+
+    <!-- =======================================================================
+         TAB 4: SOI CẦU BẠC NHỚ & LÔ RƠI
+         ======================================================================= -->
+    <div id="panel-predict" class="tab-content">
+      <section class="hero-section" style="margin-bottom: 1.5rem;">
+        <div class="hero-badge">
+          <span>🎯 Thuật Toán Thống Kê &bull; Bạc Nhớ &amp; Lô Rơi Thực Tế <span class="dyn-timeframe-val">100</span> Ngày</span>
+        </div>
+        <h2 class="hero-title">
+          Soi Cầu <span class="title-gradient-gold">Bạc Nhớ Dân Gian</span> &amp;<br>
+          Thống Kê <span class="title-gradient-purple">Lô Rơi Từ Giải Đặc Biệt</span>
+        </h2>
+        <p class="hero-subtitle">
+          Thuật toán thống kê phân tích quy luật bạc nhớ: khi con số X xuất hiện, kỳ quay kế tiếp con số nào có xác suất nổ cao nhất, kết hợp phân tích nhịp lô rơi liên tiếp.
+        </p>
+      </section>
+
+      <div class="predict-cards-grid">
+        <!-- Card 1: Bạc Nhớ Search -->
+        <article class="card-glass">
+          <div class="card-header-bar">
+            <div class="card-title-group">
+              <span class="card-title-icon">📜</span>
+              <h3 class="card-title">Soi Cầu Bạc Nhớ <span class="dyn-timeframe-val">100</span> Ngày</h3>
+            </div>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+            Nhập 1 con số (00-99). Hệ thống sẽ quét toàn bộ các ngày số này từng về để tìm ra <strong>Top các con số hay về theo sau nhất</strong>:
+          </p>
+
+          <form class="bac-nho-search-box" id="bacNhoForm">
+            <input type="text" maxlength="2" class="bac-nho-input" id="bacNhoInput" placeholder="68" value="68">
+            <button type="submit" class="btn-primary-cta" style="padding: 0.6rem 1.25rem;">
+              <span>🔍</span> Soi Bạc Nhớ
+            </button>
+          </form>
+
+          <div id="bacNhoResultsArea">
+            <div style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 0.5rem;" id="bacNhoSummaryText">
+              Đang phân tích bạc nhớ cho số 68...
+            </div>
+            <div class="bac-nho-cards-list" id="bacNhoCardsList">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2: Lô Rơi Analytics -->
+        <article class="card-glass">
+          <div class="card-header-bar">
+            <div class="card-title-group">
+              <span class="card-title-icon">🍂</span>
+              <h3 class="card-title">Thống Kê Lô Rơi Từ Đề &amp; Lô Chuỗi</h3>
+            </div>
+          </div>
+
+          <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1rem; margin-bottom: 1rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <span style="font-weight: 600; color: #fff;">Tần suất Lô Rơi từ Đề <span class="dyn-timeframe-val">100</span> ngày:</span>
+              <span id="loRoiDeRate" style="font-size: 1.1rem; font-weight: 800; color: var(--gold-400);">--% (-- lần)</span>
+            </div>
+            <p style="font-size: 0.8rem; color: var(--text-dim);">
+              (Số đề 2 số cuối giải ĐB hôm trước tiếp tục nổ loto ở kỳ quay hôm sau)
+            </p>
+          </div>
+
+          <h4 style="font-size: 0.9rem; color: var(--cyan-400); margin-bottom: 0.6rem;">
+            ⚡ Lô Đang Nổ Liên Tiếp (Chuỗi Ngày Gan Lì):
+          </h4>
+          <div id="activeStreaksList" style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem;">
+            <!-- Rendered via JS -->
+          </div>
+
+          <h4 style="font-size: 0.9rem; color: var(--rose-400); margin-bottom: 0.6rem;">
+            👑 Các Kỳ Xuất Hiện Lô Rơi Từ Đề Gần Nhất:
+          </h4>
+          <div id="loRoiDeHistoryList" style="max-height: 160px; overflow-y: auto; font-size: 0.8rem; color: var(--text-muted);">
+            <!-- Rendered via JS -->
+          </div>
+        </article>
+      </div>
+
+      <!-- Card 3: Top Cặp Số Hay Đi Cùng Nhau -->
+      <article class="card-glass" style="margin-top: 1.5rem;">
+        <div class="card-header-bar">
+          <div class="card-title-group">
+            <span class="card-title-icon">🔗</span>
+            <h3 class="card-title">Top 12 Cặp Loto Hay Xuất Hiện Cùng Nhau (Lô Xiên / Song Thủ)</h3>
+          </div>
+          <span style="font-size: 0.8rem; color: var(--text-dim);">Thống kê <span class="dyn-timeframe-val">100</span> ngày gần nhất</span>
+        </div>
+
+        <div class="pair-grid-list" id="topPairsGrid">
+          <!-- Rendered via JS -->
+        </div>
+      </article>
+    </div>
+
+    <!-- =======================================================================
+         TAB 5: SỔ MƠ TOÀN TẬP DÂN GIAN
+         ======================================================================= -->
+    <div id="panel-dreams" class="tab-content">
+      <section class="hero-section" style="margin-bottom: 1.5rem;">
+        <div class="hero-badge">
+          <span>📖 Tra Cứu Điềm Báo &bull; Kho Sổ Mơ Lô Đề Dân Gian Đầy Đủ Nhất</span>
+        </div>
+        <h2 class="hero-title">
+          Tra Cứu <span class="title-gradient-gold">Sổ Mơ Toàn Tập</span>,<br>
+          Giải Mã <span class="title-gradient-purple">Số Lộc Trời Cho</span>
+        </h2>
+        <p class="hero-subtitle">
+          Tìm kiếm nhanh các giấc mơ thường gặp: con vật, tiền tài, sự cố, tình duyên... Xem ngay cặp số tài lộc may mắn và ý nghĩa phong thủy được các cụ truyền lại!
+        </p>
+      </section>
+
+      <section class="card-glass">
+        <!-- Search Input -->
+        <div class="dream-search-container">
+          <input type="text" class="dream-search-input" id="dreamSearchInput" placeholder="🔍 Nhập từ khóa giấc mơ (Ví dụ: rắn, tiền, vàng, người yêu, rụng răng, bay lượn...)...">
+        </div>
+
+        <!-- Category Filters -->
+        <div class="dream-cat-filters">
+          <button type="button" class="dream-cat-pill active" data-cat="all">Tất Cả (Toàn Tập)</button>
+          <button type="button" class="dream-cat-pill" data-cat="dong_vat">🐾 Muông Thú</button>
+          <button type="button" class="dream-cat-pill" data-cat="tai_loc">💰 Tiền Tài &amp; Vàng Bạc</button>
+          <button type="button" class="dream-cat-pill" data-cat="con_nguoi">👥 Con Người &amp; Tình Cảm</button>
+          <button type="button" class="dream-cat-pill" data-cat="su_co">⚡ Biến Cố &amp; Giật Mình</button>
+          <button type="button" class="dream-cat-pill" data-cat="thien_nhien">🌧️ Thiên Nhiên &amp; Trời Đất</button>
+          <button type="button" class="dream-cat-pill" data-cat="do_vat">🚗 Đồ Vật &amp; Xe Cộ</button>
+        </div>
+
+        <!-- Dream Results Grid -->
+        <div class="dream-grid-results" id="dreamResultsGrid">
+          <!-- Populated via JS -->
+        </div>
+      </section>
+    </div>
+
+    <!-- =======================================================================
+         TAB 6: THẦN SỐ HỌC PYTHAGORAS (BÓI NGÀY SINH)
+         ======================================================================= -->
+    <div id="panel-numerology" class="tab-content">
+      <section class="hero-section">
+        <div class="hero-badge">
+          <span>🔢 Thần Số Học Pythagoras &bull; Định Hướng Bản Mệnh &amp; Phong Thủy Số Học</span>
+        </div>
+        <h2 class="hero-title">
+          Khám Phá <span class="title-gradient-gold">Con Số Chủ Đạo</span> &amp;<br>
+          <span class="title-gradient-purple">Bộ Số May Mắn Tương Sinh</span>
+        </h2>
+        <p class="hero-subtitle">
+          Nhập ngày sinh và họ tên để tính toán Con Số Chủ Đạo (Life Path Number), Biểu đồ ngày sinh 3x3, Năm cá nhân 2026 và kết nối trực tiếp với tần suất nổ thực tế của KQXS <span class="dyn-timeframe-val">100</span> ngày!
+        </p>
+      </section>
+
+      <!-- Numerology Form -->
+      <section class="input-shrine-card">
+        <div class="numerology-form-grid">
+          <div class="form-group">
+            <label for="numFullName" class="form-label"><span>👤</span> Họ và tên của bạn:</label>
+            <input type="text" id="numFullName" class="form-input" placeholder="Ví dụ: Bùi Huy Hoàng">
+          </div>
+          <div class="form-group">
+            <label for="numBirthDate" class="form-label"><span>🎂</span> Ngày tháng năm sinh (Dương lịch):</label>
+            <input type="date" id="numBirthDate" class="form-input" value="1998-05-24">
+          </div>
+        </div>
+        <div style="text-align: center; margin-top: 1.25rem;">
+          <button type="button" class="btn-primary-cta" id="btnCalcNumerology">
+            <span>✨</span> Khám Phá Thần Số Học &amp; Số Phong Thủy
+          </button>
+        </div>
+      </section>
+
+      <!-- Numerology Result Container -->
+      <div id="numerologyResultBox" style="display:none; margin-top: 2rem;">
+        <!-- Life Path Hero Card -->
+        <article class="card-glass numerology-hero-card">
+          <div class="num-badge-circle" id="numLifePathBadge">8</div>
+          <div class="num-hero-info">
+            <span class="num-sub-tag">CON SỐ CHỦ ĐẠO (LIFE PATH NUMBER)</span>
+            <h3 class="num-hero-title" id="numHeroTitle">Bản Lĩnh Thủ Lĩnh &amp; Năng Lực Tài Chính</h3>
+            <p class="num-hero-desc" id="numHeroDesc"></p>
+            <div class="num-meta-tags">
+              <span class="num-meta-tag" id="numElementTag">Mệnh: Kim</span>
+              <span class="num-meta-tag" id="numCareerTag">Nghề nghiệp: Quản trị, Đầu tư</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- 3-Column Grid: Personal Year, Birth Matrix, Name Numerology -->
+        <div class="numerology-details-grid">
+          <!-- Column 1: Personal Year 2026 -->
+          <article class="card-glass">
+            <div class="card-header-styled">
+              <span class="card-icon-styled">📅</span>
+              <h4 class="card-title-styled">Năm Cá Nhân 2026</h4>
+            </div>
+            <div class="personal-year-box">
+              <div class="personal-year-number" id="numPersonalYear">3</div>
+              <p class="personal-year-advice" id="numPersonalYearAdvice"></p>
+            </div>
+          </article>
+
+          <!-- Column 2: 3x3 Birth Chart Matrix -->
+          <article class="card-glass">
+            <div class="card-header-styled">
+              <span class="card-icon-styled">🧩</span>
+              <h4 class="card-title-styled">Biểu Đồ Ngày Sinh 3x3</h4>
+            </div>
+            <div class="birth-matrix-grid">
+              <div class="matrix-cell" id="matrix-3"><span class="matrix-lbl">3</span><span class="matrix-val" id="mval-3">-</span></div>
+              <div class="matrix-cell" id="matrix-6"><span class="matrix-lbl">6</span><span class="matrix-val" id="mval-6">-</span></div>
+              <div class="matrix-cell" id="matrix-9"><span class="matrix-lbl">9</span><span class="matrix-val" id="mval-9">-</span></div>
+              <div class="matrix-cell" id="matrix-2"><span class="matrix-lbl">2</span><span class="matrix-val" id="mval-2">-</span></div>
+              <div class="matrix-cell" id="matrix-5"><span class="matrix-lbl">5</span><span class="matrix-val" id="mval-5">-</span></div>
+              <div class="matrix-cell" id="matrix-8"><span class="matrix-lbl">8</span><span class="matrix-val" id="mval-8">-</span></div>
+              <div class="matrix-cell" id="matrix-1"><span class="matrix-lbl">1</span><span class="matrix-val" id="mval-1">-</span></div>
+              <div class="matrix-cell" id="matrix-4"><span class="matrix-lbl">4</span><span class="matrix-val" id="mval-4">-</span></div>
+              <div class="matrix-cell" id="matrix-7"><span class="matrix-lbl">7</span><span class="matrix-val" id="mval-7">-</span></div>
+            </div>
+            <div class="arrows-list" id="numArrowsList"></div>
+          </article>
+
+          <!-- Column 3: Name Numerology -->
+          <article class="card-glass">
+            <div class="card-header-styled">
+              <span class="card-icon-styled">📜</span>
+              <h4 class="card-title-styled">Thần Số Học Họ Tên</h4>
+            </div>
+            <div class="name-numbers-list" id="numNameNumbersList"></div>
+          </article>
+        </div>
+
+        <!-- 4 Pinnacles of Life Pyramid (Kim Tự Tháp 4 Đỉnh Cao) -->
+        <article class="card-glass" style="margin-top: 1.5rem;">
+          <div class="card-header-styled">
+            <span class="card-icon-styled">🏛️</span>
+            <h4 class="card-title-styled">Kim Tự Tháp 4 Đỉnh Cao Cuộc Đời (Pythagorean Pinnacles)</h4>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+            Dự báo 4 giai đoạn hoàng kim phát triển mạnh mẽ nhất của cuộc đời bạn. Khám phá độ tuổi chạm đỉnh và con số sứ mệnh dẫn lối:
+          </p>
+          <div class="pinnacles-pyramid-grid" id="pinnaclesPyramidGrid">
+            <!-- Populated via JS -->
+          </div>
+        </article>
+
+        <!-- Lucky Numbers & Lottery Correlation -->
+        <article class="card-glass" style="margin-top: 1.5rem;">
+          <div class="card-header-styled">
+            <span class="card-icon-styled">🎯</span>
+            <h4 class="card-title-styled">Bộ Số Phong Thủy Tương Sinh &amp; Tần Suất XSMB <span class="dyn-timeframe-val">100</span> Ngày</h4>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+            Dưới đây là các con số may mắn tương hợp với Con Số Chủ Đạo của bạn, được kiểm tra đối chiếu trực tiếp với kết quả <span class="dyn-timeframe-val">100</span> ngày qua:
+          </p>
+          <div class="numerology-lucky-grid" id="numLuckyGrid"></div>
+        </article>
+      </div>
+    </div>
+
+    <!-- =======================================================================
+         TAB 7: SOI CẦU PASCAL & TỔNG ĐỀ
+         ======================================================================= -->
+    <div id="panel-pascal" class="tab-content">
+      <section class="hero-section">
+        <div class="hero-badge">
+          <span>🔺 Thuật Toán Soi Cầu Tam Giác Pascal &bull; Mô Hình Toán Học Modulo 10</span>
+        </div>
+        <h2 class="hero-title">
+          Soi Cầu <span class="title-gradient-gold">Tam Giác Pascal</span> &amp;<br>
+          <span class="title-gradient-purple">Thống Kê Tổng Đề <span class="dyn-timeframe-val">100</span> Ngày</span>
+        </h2>
+        <p class="hero-subtitle">
+          Thuật toán cộng dồn 2 số liên tiếp theo modulo 10 giữa Giải Đặc Biệt và Giải Nhất. Kiểm chứng độ chính xác thực tế qua bộ dữ liệu <span class="dyn-timeframe-val">100</span> ngày gần nhất!
+        </p>
+      </section>
+
+      <!-- Draw Picker for Pascal -->
+      <section class="card-glass" style="margin-bottom: 1.5rem;">
+        <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;">
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <label for="pascalDrawSelect" style="font-weight: 600; color: var(--gold-400);">Chọn kỳ quay mở thưởng:</label>
+            <select id="pascalDrawSelect" class="form-input" style="width: auto; padding: 0.4rem 0.8rem;"></select>
+          </div>
+          <button type="button" class="btn-primary-cta" id="btnCalcPascal" style="padding: 0.5rem 1.25rem;">
+            <span>🔺</span> Tính Cầu Pascal
+          </button>
+        </div>
+      </section>
+
+      <!-- Pascal Pyramid Section -->
+      <section class="card-glass" style="margin-bottom: 1.5rem; text-align: center;">
+        <div class="card-header-styled" style="justify-content: center; margin-bottom: 1.25rem;">
+          <span class="card-icon-styled">🏛️</span>
+          <h4 class="card-title-styled">Kim Tự Tháp Pascal (Giải ĐB + Giải Nhất)</h4>
+        </div>
+        <div class="pascal-pyramid-container" id="pascalPyramidContainer">
+          <!-- Populated by JS -->
+        </div>
+        
+        <!-- Pascal Prediction Result Badge -->
+        <div class="pascal-prediction-box" id="pascalPredictionBox">
+          <div class="pascal-res-pair">
+            <span class="pascal-label">CẶP SỐ PASCAL DỰ ĐOÁN:</span>
+            <div class="pascal-digits-display" id="pascalDigitsDisplay">-- - --</div>
+          </div>
+          <div class="pascal-backtest-pill">
+            <span class="pill-dot-green"></span>
+            <span id="pascalAccuracyText">Độ chuẩn xác <span class="dyn-timeframe-val">100</span> ngày qua: Đang tính...</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Grid 2: Tong De & Parity / Tai-Xiu -->
+      <div class="grid-2-cols" style="margin-bottom: 1.5rem;">
+        <!-- Tong De 0-9 -->
+        <article class="card-glass">
+          <div class="card-header-styled">
+            <span class="card-icon-styled">🔢</span>
+            <h4 class="card-title-styled">Thống Kê Tổng Đề (0-9) Trong <span class="dyn-timeframe-val">100</span> Ngày</h4>
+          </div>
+          <div class="tong-de-grid" id="tongDeGrid">
+            <!-- 0-9 blocks -->
+          </div>
+          <div class="tong-de-summary" id="tongDeSummary"></div>
+        </article>
+
+        <!-- Parity & Tai-Xiu -->
+        <article class="card-glass">
+          <div class="card-header-styled">
+            <span class="card-icon-styled">⚖️</span>
+            <h4 class="card-title-styled">Tỷ Lệ Chẵn/Lẻ &amp; Tài/Xỉu (Giải ĐB)</h4>
+          </div>
+          <div class="parity-bars-container" id="parityBarsContainer">
+            <!-- Parity breakdown bars -->
+          </div>
+          <div class="taixiu-box" id="taiXiuBox" style="margin-top: 1rem;">
+            <!-- Tai Xiu breakdown -->
+          </div>
+        </article>
+      </div>
+
+      <!-- Top Xien 3 -->
+      <article class="card-glass" style="margin-bottom: 1.5rem;">
+        <div class="card-header-styled">
+          <span class="card-icon-styled">🎲</span>
+          <h4 class="card-title-styled">Bảng Vàng Lô Xiên 3 (Cùng Nổ Nhiều Nhất <span class="dyn-timeframe-val">100</span> Ngày)</h4>
+        </div>
+        <div class="top-triplets-grid" id="topTripletsGrid"></div>
+      </article>
+
+      <!-- Smart Combo Builder & Dàn Đề / Xiên 2, 3 Tự Động -->
+      <article class="card-glass">
+        <div class="card-header-styled">
+          <span class="card-icon-styled">⚡</span>
+          <h4 class="card-title-styled">Bộ Tạo Dàn Đề &amp; Ghép Lô Xiên Thông Minh</h4>
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+          Tự động kết hợp thuật toán xác suất để lên dàn đề 10-25-50 số hoặc ghép Lô Xiên 2, Xiên 3 tự động từ các con số vượng tài:
+        </p>
+
+        <div class="combo-builder-wrapper">
+          <div class="combo-preset-buttons" id="comboPresetButtons">
+            <button type="button" class="btn-combo-pill active" data-preset="tong_chan">Dàn Tổng Chẵn (50 số)</button>
+            <button type="button" class="btn-combo-pill" data-preset="tong_le">Dàn Tổng Lẻ (50 số)</button>
+            <button type="button" class="btn-combo-pill" data-preset="tai">Dàn Tài (50-99)</button>
+            <button type="button" class="btn-combo-pill" data-preset="xiu">Dàn Xỉu (00-49)</button>
+            <button type="button" class="btn-combo-pill" data-preset="dau_chan">Đầu Chẵn (50 số)</button>
+            <button type="button" class="btn-combo-pill" data-preset="dau_le">Đầu Lẻ (50 số)</button>
+            <button type="button" class="btn-combo-pill" data-preset="kep">Dàn Lô Kép (10 số)</button>
+            <button type="button" class="btn-combo-pill" data-preset="xien2_top">Ghép Xiên 2 Vàng</button>
+            <button type="button" class="btn-combo-pill" data-preset="xien3_top">Ghép Xiên 3 Vàng</button>
+          </div>
+
+          <div class="combo-result-display-card">
+            <div class="combo-result-header">
+              <span class="combo-title" id="comboResultTitle">Dàn Tổng Chẵn (50 con số):</span>
+              <button type="button" class="btn-copy-combo" id="btnCopyCombo">
+                <span>📋</span> Sao Chép Dàn Số
+              </button>
+            </div>
+            <div class="combo-tags-container" id="comboTagsContainer">
+              <!-- Dynamically populated numbers -->
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- =======================================================================
+         TAB 8: BIỂU ĐỒ TRỰC QUAN TẦN SUẤT 100 SỐ (CHART.JS)
+         ======================================================================= -->
+    <div id="panel-chart" class="tab-content">
+      <section class="hero-section">
+        <div class="hero-badge">
+          <span>📈 Trực Quan Hóa Dữ Liệu Thời Gian Thực &bull; Chart.js Canvas Interactive</span>
+        </div>
+        <h2 class="hero-title">
+          Bản Đồ Nhiệt &amp; <span class="title-gradient-gold">Tần Suất 100 Số Loto</span><br>
+          <span class="title-gradient-purple">Phân Bố Toàn Cảnh <span class="dyn-timeframe-val">100</span> Ngày</span>
+        </h2>
+        <p class="hero-subtitle">
+          Quan sát trực quan toàn bộ 100 con số (00-99). So sánh sức mạnh Đầu - Đuôi và phát hiện quy luật nổ loto với biểu đồ tương tác hiện đại!
+        </p>
+      </section>
+
+      <!-- Chart Controls -->
+      <div class="chart-controls-bar">
+        <span style="font-size: 0.85rem; color: var(--text-dim);">Lọc con số:</span>
+        <button type="button" class="chart-filter-pill active" data-filter="all">Tất Cả (00-99)</button>
+        <button type="button" class="chart-filter-pill" data-filter="top_hot">🔥 Top 15 Hot Nhất</button>
+        <button type="button" class="chart-filter-pill" data-filter="top_gan">🧊 Top 15 Lô Gan</button>
+        <button type="button" class="chart-filter-pill" data-filter="dau_04">Đầu 0 - 4</button>
+        <button type="button" class="chart-filter-pill" data-filter="dau_59">Đầu 5 - 9</button>
+      </div>
+
+      <!-- Main Bar Chart -->
+      <article class="card-glass" style="margin-bottom: 1.5rem;">
+        <div class="card-header-styled">
+          <span class="card-icon-styled">📊</span>
+          <h4 class="card-title-styled" id="lotoChartHeaderTitle">Biểu Đồ Cột: Tần Suất Xuất Hiện Trong 100 Ngày</h4>
+        </div>
+        <div style="position: relative; height: 380px; width: 100%;">
+          <canvas id="lotoFrequencyChart"></canvas>
+        </div>
+      </article>
+
+      <!-- BÀN CỜ MA TRẬN NHIỆT 100 SỐ (10x10 MATRIX HEATMAP) -->
+      <article class="card-glass matrix-heatmap-card" style="margin-bottom: 1.5rem;">
+        <div class="card-header-styled" style="flex-wrap: wrap; gap: 0.75rem;">
+          <div style="display: flex; align-items: center; gap: 0.6rem;">
+            <span class="card-icon-styled">🔥</span>
+            <div>
+              <h4 class="card-title-styled">Bàn Cờ Ma Trận Nhiệt 100 Số (00 - 99)</h4>
+              <span style="font-size: 0.8rem; color: var(--text-dim);" id="matrixSubtitle">Tần suất nổ &amp; đối chiếu kỷ lục max gan 10-15 năm</span>
+            </div>
+          </div>
+          <div class="matrix-filter-chips" id="matrixFilterChips">
+            <button type="button" class="matrix-filter-pill active" data-matrix-filter="all">Tất Cả (00-99)</button>
+            <button type="button" class="matrix-filter-pill filter-hot" data-matrix-filter="hot">🔥 Lô Nóng</button>
+            <button type="button" class="matrix-filter-pill filter-gan" data-matrix-filter="gan">🧊 Lô Gan</button>
+            <button type="button" class="matrix-filter-pill filter-gold" data-matrix-filter="cycle">⚡ Chu Kỳ Vàng</button>
+            <button type="button" class="matrix-filter-pill filter-special" data-matrix-filter="special">👑 Đã Về Đề</button>
+          </div>
+        </div>
+
+        <!-- Legend Bar -->
+        <div class="matrix-legend-bar">
+          <div class="matrix-legend-item"><span class="legend-swatch swatch-hot"></span> 🔥 Lô Nóng Đang Nổ Nhiều</div>
+          <div class="matrix-legend-item"><span class="legend-swatch swatch-gan"></span> 🧊 Lô Gan Băng Giá (>10 ngày)</div>
+          <div class="matrix-legend-item"><span class="legend-swatch swatch-normal"></span> ⚡ Nhịp Rơi Bình Thường</div>
+          <div class="matrix-legend-item"><span class="legend-swatch swatch-special"></span> 👑 Từng Trúng Giải Đặc Biệt</div>
+        </div>
+
+        <!-- 10x10 Interactive Grid Container -->
+        <div class="matrix-100-container" id="matrix100Container">
+          <div class="matrix-100-grid" id="matrix100Grid">
+            <!-- 100 numbers 00-99 dynamically rendered via JS -->
+          </div>
+        </div>
+
+        <!-- Dynamic Floating Popover Card -->
+        <div class="matrix-popover-card" id="matrixPopoverCard" style="display: none;">
+          <div class="popover-header">
+            <span class="popover-num" id="popoverNum">68</span>
+            <span class="popover-status-badge" id="popoverStatusBadge">🔥 Siêu Hot</span>
+          </div>
+          <div class="popover-body">
+            <div class="popover-row"><span>Tần suất kỳ này:</span> <strong id="popoverHits">-- lần</strong></div>
+            <div class="popover-row"><span>Số ngày chưa về:</span> <strong id="popoverUnseen">-- ngày</strong></div>
+            <div class="popover-row"><span>Kỷ lục Max Gan 10-15 năm:</span> <strong id="popoverMaxGan" class="gold-text">-- ngày</strong></div>
+            <div class="popover-row"><span>Khoảng cách đỉnh kỷ lục:</span> <strong id="popoverGanGap" class="cyan-text">-- ngày</strong></div>
+            <div class="popover-row"><span>Cặp số tương sinh:</span> <strong id="popoverCompanion">--</strong></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Grid 2 Charts: Radar Head-Tail & Doughnut Tong De -->
+      <div class="grid-2-cols">
+        <article class="card-glass">
+          <div class="card-header-styled">
+            <span class="card-icon-styled">🕸️</span>
+            <h4 class="card-title-styled">Radar: So Sánh Sức Mạnh Đầu (0-9) vs Đuôi (0-9)</h4>
+          </div>
+          <div style="position: relative; height: 320px; width: 100%;">
+            <canvas id="dauDuoiRadarChart"></canvas>
+          </div>
+        </article>
+
+        <article class="card-glass">
+          <div class="card-header-styled">
+            <span class="card-icon-styled">🍩</span>
+            <h4 class="card-title-styled">Doughnut: Tỷ Lệ Chẵn/Lẻ &amp; Tài/Xỉu Giải Đặc Biệt</h4>
+          </div>
+          <div style="position: relative; height: 320px; width: 100%;">
+            <canvas id="tongDeDoughnutChart"></canvas>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- Hidden Canvas For Lucky Card Generation -->
+    <canvas id="luckyCardCanvas" width="800" height="1200" style="display:none;"></canvas>
+
+    <!-- Site Footer with Copyright -->
+    <footer class="site-footer">
+      <div class="footer-author-box">
+        <p class="copyright-text">
+          &copy; 2026 Bản quyền thuộc về <strong>Bùi Huy Hoàng</strong> &bull; All Rights Reserved.
+        </p>
+        <p class="footer-subtext">
+          Thiết kế &amp; Phát triển bởi <strong>Bùi Huy Hoàng</strong> &bull; Tích hợp Google Gemini AI &amp; Thống Kê Dữ Liệu Thời Gian Thực
+        </p>
+      </div>
+      <p style="margin-top: 0.6rem; color: #475569; font-size: 0.75rem;">
+        ⚠️ Ứng dụng mang tính chất giải trí, phong thủy và thống kê toán học vui vẻ. Không khuyến khích cờ bạc dưới mọi hình thức!
+      </p>
+    </footer>
+
+  </div>
+
+  <!-- Mobile Connect Modal (QR Code) -->
+  <div class="modal-overlay" id="mobileModal">
+    <div class="modal-content" style="text-align: center; max-width: 440px;">
+      <div class="modal-header">
+        <h3 class="modal-title">📱 Mở Trên Điện Thoại</h3>
+        <button class="btn-icon" id="btnCloseMobile">&times;</button>
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+        Chỉ cần điện thoại và máy tính kết nối <strong>chung một mạng Wi-Fi</strong>, quét mã QR dưới đây bằng Camera hoặc Zalo để mở ngay:
+      </p>
+      <div class="qr-wrapper" style="background: #fff; padding: 12px; border-radius: 14px; display: inline-block; box-shadow: 0 0 25px rgba(245,158,11,0.3); margin-bottom: 1.25rem;">
+        <img id="qrCodeImg" src="" alt="Mã QR mở trên điện thoại" style="width: 200px; height: 200px; display: block;">
+      </div>
+      <div class="mobile-url-box" style="background: rgba(15,20,35,0.8); border: 1px solid var(--border-subtle); padding: 0.75rem; border-radius: 10px; display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin-bottom: 1rem;">
+        <span id="mobileUrlDisplay" style="font-family: var(--font-heading); color: var(--gold-400); font-weight: 700; font-size: 0.95rem; word-break: break-all;">Đang tải địa chỉ IP...</span>
+        <button type="button" class="btn-secondary" id="btnCopyMobileUrl" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">Sao Chép</button>
+      </div>
+      <p style="font-size: 0.75rem; color: var(--text-dim);">
+        💡 Mẹo: Bạn có thể chọn "Thêm vào Màn hình chính" (Add to Home Screen) trên trình duyệt Safari hoặc Chrome điện thoại để dùng như một App thực thụ!
+      </p>
+    </div>
+  </div>
+
+  <!-- Settings Modal (Gemini API Key) -->
+
+  <div class="modal-overlay" id="settingsModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">⚙️ Cài Đặt Gemini API Key</h3>
+        <button class="btn-icon" id="btnCloseSettings">&times;</button>
+      </div>
+
+      <div class="form-group">
+        <label for="inputApiKey" class="form-label">Google Gemini API Key:</label>
+        <input type="password" id="inputApiKey" class="form-input" placeholder="AIzaSy...">
+        <p class="form-help">
+          Khóa API được lưu cục bộ trên trình duyệt của bạn (hoặc đọc từ file <code>.env</code> trên máy chủ). 
+          Lấy miễn phí tại <a href="https://aistudio.google.com/" target="_blank" rel="noopener" style="color: var(--gold-400);">Google AI Studio</a>.
+        </p>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1.5rem;">
+        <button type="button" class="btn-secondary" id="btnCancelSettings">Đóng</button>
+        <button type="button" class="btn-primary-cta" id="btnSaveSettings" style="padding: 0.6rem 1.5rem;">Lưu Cấu Hình</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="/static/js/audio.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

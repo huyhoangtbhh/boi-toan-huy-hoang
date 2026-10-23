@@ -1,0 +1,36 @@
+# Virtual environments
+.venv/
+.venv - Copy/
+venv/
+ENV/
+env/
+
+# Python cache & bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+
+# Environment variables & secrets (Never commit API keys!)
+.env
+*.env
+!.env.example
+
+# IDE & Editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.agents/
+
+# Temporary test & scratch scripts
+scratch/
+*.log
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
