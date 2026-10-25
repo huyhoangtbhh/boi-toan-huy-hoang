@@ -2459,143 +2459,314 @@ body {
 
 .lottery-27-table-pro {
   width: 100%;
-  border-collapse: separate;
+  border-collapse: collapse;
   border-spacing: 0;
-  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  border: 1.5px solid rgba(255, 255, 255, 0.16);
   border-radius: var(--radius-md);
   overflow: hidden;
-  background: rgba(15, 20, 35, 0.85);
+  background: rgba(15, 20, 35, 0.9);
   box-shadow: var(--shadow-card);
+  table-layout: fixed;
 }
 
 .lottery-27-table-pro th,
 .lottery-27-table-pro td {
-  padding: 0.7rem 0.85rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   text-align: center;
-}
-
-.lottery-27-table-pro tr:last-child th,
-.lottery-27-table-pro tr:last-child td {
-  border-bottom: none;
+  vertical-align: middle;
+  padding: 0;
 }
 
 .prize-tag-col {
-  width: 110px;
+  width: 78px;
+  min-width: 78px;
+  max-width: 78px;
   font-weight: 800;
   font-size: 0.88rem;
-  border-right: 1.5px solid rgba(255, 255, 255, 0.1);
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  border-left: 3.5px solid transparent;
+  box-sizing: border-box;
   letter-spacing: 0.5px;
+  white-space: nowrap;
+  vertical-align: middle;
+  text-align: center;
+  padding: 0.5rem 0.2rem;
+}
+
+.tag-desktop {
+  display: inline;
+}
+
+.tag-mobile {
+  display: none;
 }
 
 .prize-tag-col.tag-db {
   background: linear-gradient(90deg, rgba(239, 68, 68, 0.35), rgba(239, 68, 68, 0.15));
   color: #f87171;
-  border-left: 4px solid #ef4444;
+  border-left-color: #ef4444;
 }
 
 .prize-tag-col.tag-g1 {
   background: rgba(245, 158, 11, 0.2);
   color: var(--gold-400);
+  border-left-color: #f59e0b;
 }
 
 .prize-tag-col.tag-g2 {
   background: rgba(16, 185, 129, 0.15);
   color: var(--emerald-400);
+  border-left-color: #10b981;
 }
 
 .prize-tag-col.tag-g3 {
   background: rgba(6, 182, 212, 0.15);
   color: var(--cyan-400);
+  border-left-color: #06b6d4;
 }
 
 .prize-tag-col.tag-g4 {
   background: rgba(59, 130, 246, 0.15);
   color: #60a5fa;
+  border-left-color: #3b82f6;
 }
 
 .prize-tag-col.tag-g5 {
   background: rgba(99, 102, 241, 0.15);
   color: #818cf8;
+  border-left-color: #6366f1;
 }
 
 .prize-tag-col.tag-g6 {
   background: rgba(168, 85, 247, 0.15);
   color: #c084fc;
+  border-left-color: #a855f7;
 }
 
 .prize-tag-col.tag-g7 {
   background: rgba(236, 72, 153, 0.2);
   color: #f472b6;
-  border-left: 4px solid #ec4899;
+  border-left-color: #ec4899;
 }
 
 .prize-val-cell {
-  background: rgba(15, 20, 35, 0.4);
+  background: rgba(15, 20, 35, 0.45);
+  vertical-align: middle;
+  padding: 0 !important;
 }
 
 .row-prize-db {
-  background: rgba(239, 68, 68, 0.1);
+  background: rgba(239, 68, 68, 0.08);
 }
 
-.prize-num-db {
+.row-prize-db .prize-val-cell {
+  padding: 0.6rem 0.25rem !important;
+}
+
+.prize-num-db,
+.row-prize-db .num-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 1.95rem;
   font-weight: 900;
   font-family: var(--font-heading);
-  color: #fca5a5;
-  text-shadow: 0 0 20px rgba(239, 68, 68, 0.7);
-  letter-spacing: 4px;
+  letter-spacing: 3px;
+  font-variant-numeric: tabular-nums;
 }
 
-.prize-num-g1 {
+.row-prize-db .num-head-dim {
+  color: #ff7043;
+  font-weight: 900;
+}
+
+.row-prize-db .num-tail-glow {
+  color: #ff3d00;
+  font-weight: 900;
+  text-shadow: 0 0 16px rgba(255, 61, 0, 0.65);
+}
+
+.row-prize-g1 .prize-val-cell {
+  padding: 0.55rem 0.25rem !important;
+}
+
+.prize-num-g1,
+.row-prize-g1 .num-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 1.45rem;
   font-weight: 800;
   font-family: var(--font-heading);
-  color: #fde047;
   letter-spacing: 2px;
+  font-variant-numeric: tabular-nums;
+}
+
+.row-prize-g1 .num-head-dim {
+  color: #fef08a;
+  font-weight: 800;
+}
+
+.row-prize-g1 .num-tail-glow {
+  color: #fde047;
+  font-weight: 900;
+  text-shadow: 0 0 12px rgba(253, 224, 71, 0.5);
 }
 
 .prize-flex-cells {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 0.85rem;
-  font-family: var(--font-heading);
-  font-size: 1.15rem;
-  font-weight: 700;
-}
-
-.prize-flex-cells.grid-3-cols {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.5rem 1rem;
-}
-
-.prize-flex-cells.g7-cells {
-  gap: 1.25rem;
-}
-
-.prize-g7-item {
-  display: inline-block;
-  padding: 0.2rem 0.65rem;
-  border-radius: var(--radius-sm);
-  background: rgba(236, 72, 153, 0.15);
-  border: 1px solid rgba(236, 72, 153, 0.35);
-}
-
-.g7-tail-num {
-  font-size: 1.45rem;
-  font-weight: 900;
-  color: #f472b6;
-  letter-spacing: 2px;
-  text-shadow: 0 0 10px rgba(236, 72, 153, 0.5);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-heading);
+  font-variant-numeric: tabular-nums;
 }
 
 .num-wrap {
-  display: inline-flex;
-  align-items: baseline;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.num-head-dim {
+  color: #cbd5e1;
+  font-weight: 700;
+}
+
+.num-tail-glow {
+  color: #ffffff;
+  font-weight: 900;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+}
+
+/* G2: 2 cols x 1 row */
+.prize-grid-g2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.prize-grid-g2 .num-wrap {
+  padding: 0.55rem 0.25rem;
+  font-size: 1.22rem;
+  font-weight: 800;
   letter-spacing: 1px;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.prize-grid-g2 .num-wrap:last-child {
+  border-right: none;
+}
+
+/* G3: 3 cols x 2 rows */
+.prize-grid-g3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.prize-grid-g3 .num-wrap {
+  padding: 0.5rem 0.15rem;
+  font-size: 1.12rem;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.prize-grid-g3 .num-wrap:nth-child(3n) {
+  border-right: none;
+}
+
+.prize-grid-g3 .num-wrap:nth-child(n+4) {
+  border-bottom: none;
+}
+
+/* G4: 4 cols x 1 row */
+.prize-grid-g4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.prize-grid-g4 .num-wrap {
+  padding: 0.55rem 0.12rem;
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.prize-grid-g4 .num-wrap:last-child {
+  border-right: none;
+}
+
+/* G5: 3 cols x 2 rows */
+.prize-grid-g5 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.prize-grid-g5 .num-wrap {
+  padding: 0.5rem 0.15rem;
+  font-size: 1.12rem;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.prize-grid-g5 .num-wrap:nth-child(3n) {
+  border-right: none;
+}
+
+.prize-grid-g5 .num-wrap:nth-child(n+4) {
+  border-bottom: none;
+}
+
+/* G6: 3 cols x 1 row */
+.prize-grid-g6 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.prize-grid-g6 .num-wrap {
+  padding: 0.55rem 0.2rem;
+  font-size: 1.22rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.prize-grid-g6 .num-wrap:last-child {
+  border-right: none;
+}
+
+/* G7: 4 cols x 1 row */
+.prize-grid-g7 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.prize-grid-g7 .prize-g7-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0.12rem;
+  background: transparent;
+  border: none;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0;
+  box-shadow: none;
+  width: 100%;
+}
+
+.prize-grid-g7 .prize-g7-item:last-child {
+  border-right: none;
+}
+
+.g7-tail-num {
+  font-size: 1.55rem;
+  font-weight: 900;
+  color: #ff5722;
+  letter-spacing: 1px;
+  text-shadow: 0 0 14px rgba(255, 87, 34, 0.6);
+  font-family: var(--font-heading);
+  font-variant-numeric: tabular-nums;
 }
 
 .num-head-dim {
@@ -2995,9 +3166,6 @@ body {
   .jackpot-loto-spotlight {
     width: 100%;
     text-align: center;
-  }
-  .prize-flex-cells.grid-3-cols {
-    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -4142,6 +4310,8 @@ body {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
   position: relative;
   z-index: 20;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .timeframe-horizon-info {
@@ -4179,6 +4349,8 @@ body {
   border-radius: var(--radius-full);
   border: 1px solid rgba(255, 255, 255, 0.08);
   gap: 4px;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .btn-timeframe {
@@ -4933,6 +5105,946 @@ body {
   60% { transform: scale(1.15); opacity: 1; filter: brightness(1.5); }
   100% { transform: scale(1); opacity: 1; filter: brightness(1); }
 }
+
+/* =========================================================================
+   COMPREHENSIVE MOBILE RESPONSIVE POLISH (DÀNH CHO ĐIỆN THOẠI & TABLET)
+   Tối ưu hóa toàn diện giao diện di động: Tinh tế, mượt mà, sang trọng
+   ========================================================================= */
+
+@media (max-width: 768px) {
+  /* 1. Global Container & Cosmic Background */
+  .app-container {
+    padding: 0.65rem 0.65rem 4rem;
+    max-width: 100vw;
+  }
+
+  .ambient-glow-center {
+    width: 320px;
+    height: 240px;
+    filter: blur(80px);
+    top: 20px;
+  }
+
+  /* 2. Top Navigation Bar (Sắp xếp 2 tầng thông minh) */
+  .site-nav {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0.65rem 0.75rem;
+    gap: 0.65rem;
+    margin-bottom: 0.85rem;
+    border-radius: var(--radius-md);
+  }
+
+  .brand-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 0.5rem;
+  }
+
+  .brand-icon-box {
+    width: 38px;
+    height: 38px;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .brand-text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .brand-text h1 {
+    font-size: 0.96rem;
+    font-weight: 800;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+
+  .brand-text p {
+    font-size: 0.68rem;
+    color: var(--text-dim);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2;
+  }
+
+  .status-pill {
+    padding: 2px 7px;
+    font-size: 0.68rem;
+    gap: 0.25rem;
+    flex-shrink: 0;
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 0.4rem;
+    padding-top: 0.45rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .theme-switcher-group {
+    order: 1;
+    width: auto;
+    flex: 1;
+    display: flex;
+    justify-content: space-around;
+    padding: 2px;
+    margin-top: 0;
+  }
+
+  .theme-pill-btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.72rem;
+  }
+
+  .btn-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+
+  /* 3. Phong Thủy Live Ticker (Dạng lưới 2x2 cực gọn) */
+  .fengshui-ticker-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.45rem;
+    padding: 0.6rem 0.75rem;
+    margin-bottom: 0.85rem;
+    border-radius: var(--radius-md);
+  }
+
+  .ticker-item {
+    font-size: 0.74rem;
+    gap: 0.3rem;
+    justify-content: flex-start;
+  }
+
+  .ticker-icon {
+    font-size: 0.85rem;
+  }
+
+  .ticker-countdown .ticker-val {
+    font-size: 0.72rem;
+    padding: 1px 5px;
+  }
+
+  .ticker-divider {
+    display: none;
+  }
+
+  /* 4. Tab Navigation (Thanh vuốt ngang ngọc ngà, snap chạm) */
+  .main-tabs-nav {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    justify-content: flex-start;
+    gap: 0.4rem;
+    padding: 0.45rem;
+    margin-bottom: 0.85rem;
+    border-radius: var(--radius-md);
+    scroll-snap-type: x mandatory;
+  }
+
+  .main-tabs-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tab-btn {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    padding: 0.48rem 0.75rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    gap: 0.35rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .tab-icon {
+    font-size: 0.95rem;
+  }
+
+  .tab-badge, .tab-badge-gold {
+    font-size: 0.62rem;
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+
+  /* 5. Chu Kỳ Phân Tích (Segmented Control phong cách iOS) */
+  .timeframe-horizon-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.6rem;
+    padding: 0.65rem 0.75rem;
+    margin: 0 0 0.85rem 0;
+    border-radius: var(--radius-md);
+  }
+
+  .timeframe-horizon-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .horizon-badge {
+    font-size: 0.72rem;
+    padding: 2px 7px;
+  }
+
+  .horizon-sub {
+    font-size: 0.75rem;
+  }
+
+  .timeframe-pills-group {
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+    padding: 3px;
+    gap: 3px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-full);
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .btn-timeframe {
+    flex: 1 1 0;
+    min-width: 0;
+    width: 33.333%;
+    justify-content: center;
+    padding: 0.5rem 0.2rem;
+    font-size: 0.82rem;
+    gap: 0.25rem;
+    border-radius: var(--radius-full);
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .btn-timeframe .tf-icon {
+    font-size: 0.88rem;
+    flex-shrink: 0;
+  }
+
+  .btn-timeframe .tf-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .btn-timeframe .tf-badge {
+    display: none !important;
+  }
+
+  .timeframe-meta-status {
+    justify-content: center;
+    font-size: 0.72rem;
+    width: 100%;
+    text-align: center;
+  }
+
+  /* 6. Hero Section */
+  .hero-section {
+    margin-bottom: 0.85rem;
+  }
+
+  .hero-badge {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.65rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .hero-title {
+    font-size: 1.25rem;
+    line-height: 1.35;
+    margin-bottom: 0.35rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+
+  /* 7. Golden Jackpot Showcase & Toolbar Buttons */
+  .jackpot-hero-container {
+    padding: 0.85rem;
+    margin-bottom: 1rem;
+    border-radius: var(--radius-md);
+  }
+
+  .board-header-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .draw-select-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.25rem;
+  }
+
+  .draw-select-wrapper label {
+    font-size: 0.78rem !important;
+  }
+
+  .draw-dropdown {
+    width: 100%;
+    padding: 0.55rem 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .board-toolbar-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem;
+  }
+
+  .btn-live-stream {
+    grid-column: 1 / 2;
+    justify-content: center;
+    font-size: 0.78rem;
+    padding: 0.5rem 0.3rem;
+  }
+
+  .btn-simulate-stream {
+    grid-column: 2 / 3;
+    justify-content: center;
+    font-size: 0.78rem;
+    padding: 0.5rem 0.3rem;
+  }
+
+  #btnPrevDraw {
+    grid-column: 1 / 2;
+    justify-content: center;
+    font-size: 0.78rem;
+    padding: 0.45rem 0.3rem;
+  }
+
+  #btnNextDraw {
+    grid-column: 2 / 3;
+    justify-content: center;
+    font-size: 0.78rem;
+    padding: 0.45rem 0.3rem;
+  }
+
+  #btnLatestDraw {
+    grid-column: 1 / 3;
+    width: 100%;
+    justify-content: center;
+    font-size: 0.8rem;
+    padding: 0.5rem 0.3rem;
+    background: rgba(245, 158, 11, 0.18);
+    border-color: var(--gold-400);
+    color: var(--gold-300);
+    font-weight: 700;
+  }
+
+  .btn-copy-action {
+    grid-column: 1 / 3;
+    width: 100%;
+    justify-content: center;
+    padding: 0.55rem 0.5rem;
+    font-size: 0.82rem;
+  }
+
+  /* 8. Live Stream Ticker Banner */
+  .live-stream-banner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.55rem;
+    padding: 0.65rem 0.75rem;
+    margin-bottom: 0.85rem;
+    border-radius: var(--radius-md);
+  }
+
+  .live-banner-left {
+    width: 100%;
+    gap: 0.6rem;
+  }
+
+  .live-title-text {
+    font-size: 0.85rem;
+  }
+
+  .live-sub-text {
+    font-size: 0.72rem;
+  }
+
+  .live-banner-right {
+    width: 100%;
+    justify-content: space-between;
+    gap: 0.4rem;
+  }
+
+  .live-progress-badge {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.55rem;
+  }
+
+  .btn-live-speed, .btn-live-stop {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.6rem;
+  }
+
+  /* 9. Golden Jackpot Box & 5 Ô Số Hoàng Gia */
+  .jackpot-showcase-box {
+    padding: 0.85rem 0.65rem;
+    border-radius: var(--radius-md);
+  }
+
+  .jackpot-crown-header {
+    padding: 0.35rem 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .jackpot-tag {
+    font-size: 0.74rem;
+  }
+
+  .jackpot-date-pill {
+    font-size: 0.68rem;
+    padding: 2px 6px;
+  }
+
+  .jackpot-main-display {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.65rem;
+    margin: 0.65rem 0;
+  }
+
+  .jackpot-five-digits {
+    gap: 0.25rem;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .digit-box {
+    width: 40px !important;
+    height: 50px !important;
+    font-size: 1.45rem !important;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  }
+
+  .jackpot-loto-spotlight {
+    width: auto !important;
+    min-width: 160px;
+    padding: 0.35rem 1.25rem;
+    text-align: center;
+    border-radius: var(--radius-md);
+    margin-top: 0.25rem;
+  }
+
+  .spotlight-label {
+    font-size: 0.66rem;
+    letter-spacing: 0.05em;
+  }
+
+  .spotlight-num {
+    font-size: 1.85rem;
+    line-height: 1.1;
+  }
+
+  .jackpot-meta-bar {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem;
+    padding-top: 0.65rem;
+  }
+
+  .jackpot-meta-pill {
+    padding: 0.35rem 0.5rem;
+    font-size: 0.74rem;
+    gap: 0.25rem;
+  }
+
+  .meta-value {
+    font-size: 0.78rem;
+  }
+
+  /* 10. Bảng 27 Giải Truyền Thống Pro */
+  .board-split-layout {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .card-glass {
+    padding: 0.85rem;
+    border-radius: var(--radius-md);
+  }
+
+  .col-header-bar {
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .col-title {
+    font-size: 0.95rem;
+  }
+
+  .badge-db-glow {
+    font-size: 0.75rem;
+    padding: 2px 7px;
+  }
+
+  .lottery-27-table-pro th,
+  .lottery-27-table-pro td {
+    padding: 0 !important;
+    vertical-align: middle !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  }
+
+  .prize-tag-col {
+    width: 46px !important;
+    min-width: 46px !important;
+    max-width: 46px !important;
+    font-size: 0.82rem !important;
+    font-weight: 800 !important;
+    padding: 0.45rem 0.15rem !important;
+    letter-spacing: 0 !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+  }
+
+  .tag-desktop {
+    display: none !important;
+  }
+
+  .tag-mobile {
+    display: inline !important;
+  }
+
+  .prize-val-cell {
+    padding: 0 !important;
+    vertical-align: middle !important;
+  }
+
+  .row-prize-db .prize-val-cell {
+    padding: 0.55rem 0.2rem !important;
+  }
+
+  .row-prize-db .num-wrap,
+  .prize-num-db {
+    font-size: 1.65rem !important;
+    letter-spacing: 2.5px !important;
+  }
+
+  .row-prize-g1 .prize-val-cell {
+    padding: 0.5rem 0.2rem !important;
+  }
+
+  .row-prize-g1 .num-wrap,
+  .prize-num-g1 {
+    font-size: 1.25rem !important;
+    letter-spacing: 1.5px !important;
+  }
+
+  .prize-flex-cells {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    gap: 0 !important;
+  }
+
+  /* G2: 2 cols x 1 row */
+  .prize-grid-g2 {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .prize-grid-g2 .num-wrap {
+    padding: 0.5rem 0.15rem !important;
+    font-size: 1.08rem !important;
+    letter-spacing: 0.5px !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.12) !important;
+  }
+
+  .prize-grid-g2 .num-wrap:last-child {
+    border-right: none !important;
+  }
+
+  /* G3: 3 cols x 2 rows */
+  .prize-grid-g3 {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  .prize-grid-g3 .num-wrap {
+    padding: 0.42rem 0.1rem !important;
+    font-size: 0.96rem !important;
+    letter-spacing: 0.3px !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+  }
+
+  .prize-grid-g3 .num-wrap:nth-child(3n) {
+    border-right: none !important;
+  }
+
+  .prize-grid-g3 .num-wrap:nth-child(n+4) {
+    border-bottom: none !important;
+  }
+
+  /* G4: 4 cols x 1 row */
+  .prize-grid-g4 {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+
+  .prize-grid-g4 .num-wrap {
+    padding: 0.5rem 0.1rem !important;
+    font-size: 1rem !important;
+    letter-spacing: 0.3px !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.12) !important;
+  }
+
+  .prize-grid-g4 .num-wrap:last-child {
+    border-right: none !important;
+  }
+
+  /* G5: 3 cols x 2 rows */
+  .prize-grid-g5 {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  .prize-grid-g5 .num-wrap {
+    padding: 0.42rem 0.1rem !important;
+    font-size: 0.96rem !important;
+    letter-spacing: 0.3px !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+  }
+
+  .prize-grid-g5 .num-wrap:nth-child(3n) {
+    border-right: none !important;
+  }
+
+  .prize-grid-g5 .num-wrap:nth-child(n+4) {
+    border-bottom: none !important;
+  }
+
+  /* G6: 3 cols x 1 row */
+  .prize-grid-g6 {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  .prize-grid-g6 .num-wrap {
+    padding: 0.5rem 0.15rem !important;
+    font-size: 1.1rem !important;
+    letter-spacing: 0.5px !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.12) !important;
+  }
+
+  .prize-grid-g6 .num-wrap:last-child {
+    border-right: none !important;
+  }
+
+  /* G7: 4 cols x 1 row */
+  .prize-grid-g7 {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+
+  .prize-grid-g7 .prize-g7-item {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0.45rem 0.1rem !important;
+    background: transparent !important;
+    border: none !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  .prize-grid-g7 .prize-g7-item:last-child {
+    border-right: none !important;
+  }
+
+  .prize-grid-g7 .g7-tail-num {
+    font-size: 1.35rem !important;
+    font-weight: 900 !important;
+    color: #ff5722 !important;
+    letter-spacing: 0.8px !important;
+    text-shadow: 0 0 10px rgba(255, 87, 34, 0.6) !important;
+    font-family: var(--font-heading) !important;
+    font-variant-numeric: tabular-nums !important;
+  }
+
+  .daily-quick-insights-card {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+    padding: 0.65rem 0.75rem;
+    font-size: 0.76rem;
+  }
+
+  /* 11. Bảng Đầu - Đuôi Loto 3D VIP */
+  .dau-duoi-view-toggle {
+    display: flex;
+    width: 100%;
+    gap: 0.4rem;
+    margin-bottom: 0.65rem;
+  }
+
+  #btnShowDau, #btnShowDuoi {
+    flex: 1;
+    text-align: center;
+    justify-content: center;
+    padding: 0.45rem 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .dau-duoi-head-col {
+    width: 40px !important;
+    min-width: 40px !important;
+    padding: 0.4rem 0.25rem;
+  }
+
+  .head-circle {
+    width: 28px;
+    height: 28px;
+    font-size: 0.9rem;
+  }
+
+  .tails-list {
+    gap: 6px 8px;
+    padding: 6px 4px;
+  }
+
+  .stack-3d-card {
+    min-width: 32px;
+    height: 29px;
+    font-size: 0.9rem;
+    padding: 0 5px;
+    border-radius: 5px;
+  }
+
+  .stack-3d-card.is-special-db {
+    min-width: 38px;
+  }
+
+  .stack-badge {
+    font-size: 0.55rem;
+    padding: 1px 3px;
+    top: -7px;
+    right: -5px;
+    border-radius: 3px;
+  }
+
+  .crown-icon {
+    top: -11px;
+    font-size: 0.72rem;
+  }
+
+  .cam-indicator-badge {
+    font-size: 0.68rem;
+    padding: 2px 6px;
+  }
+
+  /* 12. Tab Xin Quẻ & Soi Cầu AI */
+  .input-shrine-card {
+    padding: 1.15rem 0.85rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .quick-tags-wrap {
+    display: flex;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 0.35rem;
+    padding-bottom: 0.35rem;
+  }
+
+  .tag-pill {
+    flex-shrink: 0;
+    font-size: 0.74rem;
+    padding: 0.3rem 0.65rem;
+  }
+
+  .shrine-actions-group {
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .btn-shrine-action {
+    width: 100%;
+    justify-content: center;
+    padding: 0.7rem;
+    font-size: 0.92rem;
+  }
+
+  .prophecy-result-card {
+    padding: 1.15rem 0.85rem;
+  }
+
+  /* 13. Tab Thần Số Học */
+  .numerology-calc-card {
+    padding: 1.15rem 0.85rem;
+  }
+
+  .birth-input-group {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .btn-calc-numerology {
+    width: 100%;
+    justify-content: center;
+    padding: 0.7rem;
+  }
+
+  /* 14. Tab Cầu Pascal */
+  .pascal-card {
+    padding: 1rem 0.75rem;
+  }
+
+  .pascal-pyramid-container {
+    overflow-x: auto;
+    padding: 0.65rem 0.35rem;
+  }
+
+  .pascal-row {
+    font-size: clamp(0.7rem, 3vw, 1.05rem);
+    letter-spacing: 1px;
+    gap: 1px;
+  }
+
+  /* 15. Tab Biểu Đồ & Matrix 100 */
+  .matrix-100-container {
+    padding: 0.65rem 0.4rem;
+  }
+
+  .matrix-100-grid {
+    grid-template-columns: repeat(10, 1fr);
+    gap: 2px;
+  }
+
+  .matrix-cell-100 {
+    min-width: unset !important;
+    aspect-ratio: 1;
+    padding: 1px;
+  }
+
+  .matrix-cell-100 .cell-num {
+    font-size: 0.68rem;
+  }
+
+  .matrix-cell-100 .cell-hits {
+    font-size: 0.55rem;
+  }
+
+  /* 16. Tab Bạc Nhớ & Sổ Mơ */
+  .bac-nho-cards-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .dream-categories-bar {
+    display: flex;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 0.35rem;
+    padding-bottom: 0.35rem;
+  }
+
+  .dream-cat-btn {
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    padding: 0.35rem 0.65rem;
+  }
+
+  .dream-grid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  /* 17. Floating Chat Modal & Popups */
+  .chat-floating-btn {
+    bottom: 1.25rem;
+    right: 1.25rem;
+    width: 50px;
+    height: 50px;
+    font-size: 1.35rem;
+  }
+
+  .chat-modal-window {
+    width: 95vw !important;
+    max-width: 95vw !important;
+    height: 82vh !important;
+    bottom: 0.5rem !important;
+    right: 2.5vw !important;
+    border-radius: var(--radius-lg);
+  }
+
+  .modal-card {
+    width: 94vw !important;
+    max-width: 94vw !important;
+    padding: 1.15rem 0.85rem !important;
+  }
+}
+
+/* Tinh chỉnh riêng cho điện thoại màn hình nhỏ (< 400px như iPhone SE, Galaxy A) */
+@media (max-width: 400px) {
+  .digit-box {
+    width: 35px !important;
+    height: 44px !important;
+    font-size: 1.25rem !important;
+  }
+
+  .prize-tag-col {
+    width: 62px !important;
+    min-width: 62px !important;
+    max-width: 62px !important;
+    font-size: 0.7rem;
+  }
+
+  .prize-num-db {
+    font-size: 1.28rem;
+    letter-spacing: 1px;
+  }
+
+  .prize-flex-cells {
+    font-size: 0.85rem;
+  }
+
+  .stack-3d-card {
+    min-width: 28px;
+    height: 27px;
+    font-size: 0.82rem;
+    padding: 0 4px;
+  }
+}
+
 
 
 

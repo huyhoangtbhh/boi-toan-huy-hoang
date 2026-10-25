@@ -1248,6 +1248,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const panel = document.getElementById(`panel-${target}`);
       if (panel) panel.classList.add('active');
 
+      // Auto-scroll tab into center view on mobile
+      try {
+        btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      } catch (err) {}
+
       if (window.soundFX) window.soundFX.playTick();
 
       // Lazy load tab data using the currently selected timeframe
